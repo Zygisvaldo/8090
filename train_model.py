@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 import pickle
 import json
 
-with open('../public_cases.json', 'r') as f:
+with open('public_cases.json', 'r') as f:
     data = json.load(f)
 
 # Convert to DataFrame
@@ -68,7 +68,7 @@ with open('reimbursement_model.pkl', 'wb') as f:
     pickle.dump(model, f)
 
 # Generate predictions for private_cases.json
-with open('../private_cases.json', 'r') as f:
+with open('private_cases.json', 'r') as f:
     private_cases = json.load(f)
 private_df = pd.DataFrame([{
     'days': case['trip_duration_days'],
@@ -91,4 +91,4 @@ X_private = private_df[['days', 'miles', 'receipts', 'miles_per_day', 'receipts_
                         'log_receipts', 'is_long_trip', 'cents', 'is_sweet_spot', 
                         'high_receipt_penalty', 'days_receipts_interaction', 'miles_receipts_ratio']]
 predictions = model.predict(X_private)
-np.savetxt('../private_results.txt', predictions, fmt='%.2f')
+np.savetxt('private_results.txt', predictions, fmt='%.2f')
